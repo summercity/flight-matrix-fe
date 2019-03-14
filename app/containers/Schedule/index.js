@@ -24,16 +24,33 @@ import saga from './saga';
 import reducer from './reducer';
 import makeSelectSchedule from './selectors';
 
+import { Schedules } from './helpers';
 import { minutes, headers } from './data';
 import { schedulesFaker } from './fakers';
-import Styles from './style';
-// import Column from '../../components/Column';
+import Column from '../../components/Column';
 import Terminals from '../../components/Terminals';
+import Styles from './style';
 
 /* eslint-disable react/prefer-stateless-function */
 export class Schedule extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      schedules: schedulesFaker,
+      selectedFormat: minutes,
+      preparedSchedules: [],
+    };
+  }
+
+  componentDidMount() {
+    const { schedules, selectedFormat } = this.state;
+    const preparedSchedules = Schedules({ schedules, selectedFormat });
+    this.setState({ preparedSchedules });
+  }
+
   render() {
     const { classes } = this.props;
+    const { preparedSchedules } = this.state;
     return (
       <div className={classes.root}>
         <Helmet>
@@ -41,24 +58,19 @@ export class Schedule extends React.Component {
           <meta name="description" content="Description of Schedule" />
         </Helmet>
         <Paper className={classes.paper}>
-          <table className={classes.table}>
+          <table className={classes.tableFixed}>
             <thead>
               <tr className={classes.tr}>
                 {headers.map(h => (
-                  <th key={h.key} className={classes.th}>
+                  <th key={h.key} className={classes.thFixed}>
                     {h.text}
-                  </th>
-                ))}
-                {minutes.map(m => (
-                  <th key={m.key} className={classes.thTime} rowSpan="2">
-                    <span className={classes.spanHeaderTime}>{m.time}</span>
                   </th>
                 ))}
               </tr>
               <Terminals />
             </thead>
             <tbody>
-              {schedulesFaker.map(s => (
+              {preparedSchedules.map(s => (
                 <tr className={classes.tr} key={s.id}>
                   <td className={classes.td}>{s.flightNo}</td>
                   <td className={classes.td}>{s.destination}</td>
@@ -66,9 +78,31 @@ export class Schedule extends React.Component {
                   <td className={classes.td}>{s.terminal}</td>
                   <td className={classes.td}>{s.departure}</td>
                   <td className={classes.td}>{s.groundTime}</td>
-                  {/* {minutes.map(m => (
-                    <Column className={classes.td} classIcon={classes.icon} type='@blank' />
-                  ))} */}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <table className={classes.table}>
+            <thead>
+              <tr className={classes.tr}>
+                {minutes.map(m => (
+                  <th key={m.key} className={classes.thTime} rowSpan="2">
+                    <span className={classes.spanHeaderTime}>{m.time}</span>
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {preparedSchedules.map(s => (
+                <tr className={classes.tr} key={s.id}>
+                  {s.types.map(t => (
+                    <Column
+                      key={`${t.key}child`}
+                      className={classes.td}
+                      classIcon={classes.icon}
+                      type={t.type}
+                    />
+                  ))}
                 </tr>
               ))}
             </tbody>

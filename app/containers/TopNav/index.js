@@ -80,7 +80,7 @@ export class TopNav extends React.Component {
               label={auth ? 'Logout' : 'Login'}
             />
           </FormGroup> */}
-          <AppBar position="static">
+          <AppBar position="static" style={{ backgroundColor: '#023E54' }}>
             <Toolbar>
               <IconButton
                 className={classes.menuButton}
