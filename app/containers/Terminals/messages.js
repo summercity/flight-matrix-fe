@@ -15,6 +15,6 @@ export default defineMessages({
   },
   terminals: {
     id: `${scope}.header`,
-    defaultMessage: 'TERMINAL 1, 2 & 3',
+    defaultMessage: 'View by Terminal',
   },
 });

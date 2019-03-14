@@ -39,6 +39,16 @@ const schedulesFaker = [
     groundTime: 60,
     flightDate: null,
   },
+  {
+    id: 5,
+    flightNo: '5J 279',
+    destination: 'DPS',
+    equipment: 'D',
+    terminal: '3',
+    departure: '03:50',
+    groundTime: 60,
+    flightDate: null,
+  },
 ];
 
 export { schedulesFaker };

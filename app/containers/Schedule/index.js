@@ -28,7 +28,7 @@ import { Schedules } from './helpers';
 import { minutes, headers } from './data';
 import { schedulesFaker } from './fakers';
 import Column from '../../components/Column';
-import Terminals from '../../components/Terminals';
+import Terminals from '../Terminals';
 import Styles from './style';
 
 /* eslint-disable react/prefer-stateless-function */

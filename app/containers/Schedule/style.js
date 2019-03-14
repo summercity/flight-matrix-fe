@@ -8,13 +8,13 @@ const Styles = theme => ({
 
   paper: {
     overflowX: 'scroll',
+    position: 'relative',
   },
 
   tableFixed: {
     position: 'fixed',
     borderRadius: 3,
     borderStyle: 'hidden',
-    // boxShadow: '0 0 0 3px #023E54',
     display: 'inline',
     zIndex: 10,
     background: '#fff',
@@ -25,7 +25,6 @@ const Styles = theme => ({
     marginLeft: '303px',
     borderRadius: 3,
     borderStyle: 'hidden',
-    // boxShadow: '0 0 0 3px #023E54',
     display: 'inline',
   },
 
@@ -61,6 +60,7 @@ const Styles = theme => ({
     padding: 5,
     textAlign: 'center',
     minWidth: '50px',
+    height: '99px',
     overflow: 'hidden',
     letterSpacing: '0.0075em',
   },
