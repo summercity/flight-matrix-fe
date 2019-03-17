@@ -529,4 +529,131 @@ const minutes = [
   },
 ];
 
-export { minutes, headers };
+const hourly = [
+  {
+    id: 1,
+    key: '4e79bec0',
+    time: '0:00',
+  },
+  {
+    id: 2,
+    key: '0232fbb0',
+    time: '1:00',
+  },
+  {
+    id: 3,
+    key: '9b16455c',
+    time: '2:00',
+  },
+  {
+    id: 400,
+    key: '57f6ef2a',
+    time: '3:00',
+  },
+  {
+    id: 4,
+    key: '1adb84ff',
+    time: '4:00',
+  },
+  {
+    id: 5,
+    key: '8f323f61',
+    time: '5:00',
+  },
+  {
+    id: 6,
+    key: 'b8776192',
+    time: '6:00',
+  },
+  {
+    id: 7,
+    key: '49e41bd1',
+    time: '7:00',
+  },
+  {
+    id: 8,
+    key: 'e44d36a4',
+    time: '8:00',
+  },
+  {
+    id: 9,
+    key: 'f59069f9',
+    time: '9:00',
+  },
+  {
+    id: 10,
+    key: '94c63429',
+    time: '10:00',
+  },
+  {
+    id: 11,
+    key: '7f9bb8b4',
+    time: '11:00',
+  },
+  {
+    id: 12,
+    key: 'c50285be',
+    time: '12:00',
+  },
+  {
+    id: 13,
+    key: 'dcc54733',
+    time: '13:00',
+  },
+  {
+    id: 14,
+    key: 'ec08488e',
+    time: '14:00',
+  },
+  {
+    id: 15,
+    key: '6850bb01',
+    time: '15:00',
+  },
+  {
+    id: 16,
+    key: '5c237fbb',
+    time: '16:00',
+  },
+  {
+    id: 17,
+    key: 'acc7c33d',
+    time: '',
+  },
+  {
+    id: 18,
+    key: '89c1c3d6',
+    time: '18:00',
+  },
+  {
+    id: 19,
+    key: 'c3e46782',
+    time: '19:00',
+  },
+  {
+    id: 20,
+    key: '6952e38a',
+    time: '20:00',
+  },
+  {
+    id: 21,
+    key: 'a4ea75fa',
+    time: '21:00',
+  },
+  {
+    id: 22,
+    key: '1cd45316',
+    time: '22:00',
+  },
+  {
+    id: 23,
+    key: 'a68a7c19',
+    time: '23:00',
+  },
+  {
+    id: 24,
+    key: 'fb3ce926',
+    time: '24:00',
+  },
+];
+export { minutes, headers, hourly };

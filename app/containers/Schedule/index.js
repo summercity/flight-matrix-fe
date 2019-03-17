@@ -25,10 +25,11 @@ import reducer from './reducer';
 import makeSelectSchedule from './selectors';
 
 import { Schedules } from './helpers';
-import { minutes, headers } from './data';
+import { minutes, hourly, headers } from './data';
 import { schedulesFaker } from './fakers';
 import Column from '../../components/Column';
 import Terminals from '../Terminals';
+import TimeFormat from '../TimeFormat';
 import Styles from './style';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -48,15 +49,29 @@ export class Schedule extends React.Component {
     this.setState({ preparedSchedules });
   }
 
+  // Temp only we will use Redux later on
+  handleTimeFormat = value => {
+    const { schedules } = this.state;
+    let selectedFormat = [];
+    if (value === 0) {
+      selectedFormat = minutes;
+    } else {
+      selectedFormat = hourly;
+    }
+    const preparedSchedules = Schedules({ schedules, selectedFormat });
+    this.setState({ selectedFormat, preparedSchedules });
+  };
+
   render() {
     const { classes } = this.props;
-    const { preparedSchedules } = this.state;
+    const { preparedSchedules, selectedFormat } = this.state;
     return (
       <div className={classes.root}>
         <Helmet>
           <title>Schedule</title>
           <meta name="description" content="Description of Schedule" />
         </Helmet>
+        <TimeFormat onChange={this.handleTimeFormat} />
         <Paper className={classes.paper}>
           <table className={classes.tableFixed}>
             <thead>
@@ -85,7 +100,7 @@ export class Schedule extends React.Component {
           <table className={classes.table}>
             <thead>
               <tr className={classes.tr}>
-                {minutes.map(m => (
+                {selectedFormat.map(m => (
                   <th key={m.key} className={classes.thTime} rowSpan="2">
                     <span className={classes.spanHeaderTime}>{m.time}</span>
                   </th>
