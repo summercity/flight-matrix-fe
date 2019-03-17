@@ -11,6 +11,7 @@ import { Helmet } from 'react-helmet';
 // import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import { filter, flatMapDeep, orderBy } from 'lodash';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -62,6 +63,27 @@ export class Schedule extends React.Component {
     this.setState({ selectedFormat, preparedSchedules });
   };
 
+  handleTerminal = terminal => {
+    const { schedules, selectedFormat } = this.state;
+    const preparedSchedules = Schedules({ schedules, selectedFormat });
+    let filteredData = [];
+    if (terminal.length > 0) {
+      Object.keys(terminal).forEach(t => {
+        const r = filter(preparedSchedules, { terminal: terminal[t] });
+        if (r.length > 0) filteredData.push(r);
+      });
+      // Todo Create Order State
+      const orderState = orderBy(
+        flatMapDeep(filteredData),
+        ['terminal'],
+        ['asc'],
+      );
+      this.setState({ preparedSchedules: orderState });
+    } else {
+      filteredData = preparedSchedules;
+    }
+  };
+
   render() {
     const { classes } = this.props;
     const { preparedSchedules, selectedFormat } = this.state;
@@ -82,7 +104,7 @@ export class Schedule extends React.Component {
                   </th>
                 ))}
               </tr>
-              <Terminals />
+              <Terminals onChange={this.handleTerminal} />
             </thead>
             <tbody>
               {preparedSchedules.map(s => (
