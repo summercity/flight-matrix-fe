@@ -650,10 +650,5 @@ const hourly = [
     key: 'a68a7c19',
     time: '23:00',
   },
-  {
-    id: 24,
-    key: 'fb3ce926',
-    time: '24:00',
-  },
 ];
 export { minutes, headers, hourly };

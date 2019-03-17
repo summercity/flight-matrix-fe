@@ -31,20 +31,19 @@ class Terminals extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      alignment: ['1', '2', '3'],
+      terminal: ['1', '2', '3'],
     };
   }
-  // handdleChange = (event, alignment) => {
-  //   console.log("event", alignment);
-  //   props.handleAlignment(event, alignment);
-  // }
 
-  handdleChange = (event, alignment) => this.setState({ alignment });
+  handdleChange = (event, terminal) => {
+    this.setState({ terminal });
+    this.props.onChange(terminal);
+  };
 
   render() {
     const { classes } = this.props;
 
-    const { alignment } = this.state;
+    const { terminal } = this.state;
     return (
       <React.Fragment>
         <tr>
@@ -52,7 +51,7 @@ class Terminals extends React.Component {
             <span>
               <FormattedMessage {...messages.terminals} />
             </span>
-            <ToggleButtonGroup value={alignment} onChange={this.handdleChange}>
+            <ToggleButtonGroup value={terminal} onChange={this.handdleChange}>
               <ToggleButton value="1">1</ToggleButton>
               <ToggleButton value="2">2</ToggleButton>
               <ToggleButton value="3">3</ToggleButton>
