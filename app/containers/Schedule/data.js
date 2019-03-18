@@ -108,16 +108,6 @@ const minutes = [
     time: '3:30',
   },
   {
-    id: 17,
-    key: 'a09764e9',
-    time: '3:15',
-  },
-  {
-    id: 18,
-    key: '8825e223',
-    time: '3:30',
-  },
-  {
     id: 19,
     key: '7c1d592c',
     time: '3:45',
