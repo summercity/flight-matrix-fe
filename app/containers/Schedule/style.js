@@ -88,6 +88,8 @@ const Styles = theme => ({
 
   icon: {
     fontSize: 30,
+    writingMode: 'vertical-rl',
+    transform: 'rotate(90deg)',
   },
 
   rightIcon: {

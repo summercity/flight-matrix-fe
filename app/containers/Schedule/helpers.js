@@ -12,13 +12,12 @@ export function Schedules({ schedules, selectedFormat }) {
     const computedRefuelTime =
       Minutes(schedules[s].departure) - schedules[s].groundTime;
 
-    let marked = false;
-
     const n = {};
     const t = [];
 
     Object.keys(selectedFormat).forEach(f => {
       const timeLine = Minutes(selectedFormat[f].time);
+      const departure = Minutes(schedules[s].departure);
       // ### Set refuel time ###
 
       // 1. Build preparedSchedules first layer
@@ -33,8 +32,7 @@ export function Schedules({ schedules, selectedFormat }) {
 
       // 2. Build preparedSchedules {types} object
       const type = {};
-      if (computedRefuelTime < timeLine && !marked) {
-        marked = true;
+      if (computedRefuelTime <= timeLine && timeLine <= departure) {
         type.type = '@pending';
       } else {
         type.type = '@blank';

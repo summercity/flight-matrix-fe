@@ -21,7 +21,7 @@ import PendingIcon from '@material-ui/icons/AirplanemodeActive';
 function Column({ type, className, classIcon }) {
   switch (type) {
     case '@blank':
-      return <td className={className}>x</td>;
+      return <td className={className} />;
     case '@pending':
       return (
         <td className={className}>
