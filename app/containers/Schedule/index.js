@@ -24,10 +24,9 @@ import Paper from '@material-ui/core/Paper';
 import saga from './saga';
 import reducer from './reducer';
 import makeSelectSchedule from './selectors';
+import makeSelectTimeFormat from '../TimeFormat/selectors';
 
 import { Schedules } from './helpers';
-import { minutes, hourly, headers } from './data';
-import { schedulesFaker } from './fakers';
 import Column from '../../components/Column';
 import Terminals from '../Terminals';
 import TimeFormat from '../TimeFormat';
@@ -38,33 +37,29 @@ export class Schedule extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      schedules: schedulesFaker,
-      selectedFormat: minutes,
       preparedSchedules: [],
     };
   }
 
   componentDidMount() {
-    const { schedules, selectedFormat } = this.state;
+    const { schedules } = this.props.schedule;
+    const { selectedFormat } = this.props.timeFormat;
     const preparedSchedules = Schedules({ schedules, selectedFormat });
     this.setState({ preparedSchedules });
   }
 
-  // Temp only we will use Redux later on
-  handleTimeFormat = value => {
-    const { schedules } = this.state;
-    let selectedFormat = [];
-    if (value === 0) {
-      selectedFormat = minutes;
-    } else {
-      selectedFormat = hourly;
+  componentDidUpdate(nextProps) {
+    const { selectedFormat } = this.props.timeFormat;
+    const { schedules } = this.props.schedule;
+    if (selectedFormat !== nextProps.timeFormat.selectedFormat) {
+      const preparedSchedules = Schedules({ schedules, selectedFormat });
+      this.setState({ preparedSchedules });
     }
-    const preparedSchedules = Schedules({ schedules, selectedFormat });
-    this.setState({ selectedFormat, preparedSchedules });
-  };
+  }
 
   handleTerminal = terminal => {
-    const { schedules, selectedFormat } = this.state;
+    const { schedules } = this.props.schedule;
+    const { selectedFormat } = this.props.timeFormat;
     const preparedSchedules = Schedules({ schedules, selectedFormat });
     let filteredData = [];
     if (terminal.length > 0) {
@@ -86,14 +81,15 @@ export class Schedule extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { preparedSchedules, selectedFormat } = this.state;
+    const { preparedSchedules } = this.state;
+    const { headers, selectedFormat } = this.props.timeFormat;
     return (
       <div className={classes.root}>
         <Helmet>
           <title>Schedule</title>
           <meta name="description" content="Description of Schedule" />
         </Helmet>
-        <TimeFormat onChange={this.handleTimeFormat} />
+        <TimeFormat />
         <Paper className={classes.paper}>
           <table className={classes.tableFixed}>
             <thead>
@@ -153,10 +149,13 @@ export class Schedule extends React.Component {
 Schedule.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
+  schedule: PropTypes.object.isRequired,
+  timeFormat: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   schedule: makeSelectSchedule(),
+  timeFormat: makeSelectTimeFormat(),
 });
 
 function mapDispatchToProps(dispatch) {
