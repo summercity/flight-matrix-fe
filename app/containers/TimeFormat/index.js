@@ -16,7 +16,11 @@ import injectReducer from 'utils/injectReducer';
 import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
+
+import { setSelectedFormatAction }  from './actions'
 import makeSelectTimeFormat from './selectors';
+import makeSelectSchedule from '../Schedule/selectors';
+
 import reducer from './reducer';
 import saga from './saga';
 // import messages from './messages';
@@ -28,8 +32,15 @@ export class TimeFormat extends React.PureComponent {
   };
 
   handleChange = (event, value) => {
+    const { minutes, hourly } = this.props.timeFormat
+    let selectedFormat = {};
+    if (value === 0) {
+      selectedFormat = minutes;
+    } else {
+      selectedFormat = hourly;
+    }
+    this.props.setSelectedFormat(selectedFormat);
     this.setState({ value });
-    this.props.onChange(value);
   };
 
   render() {
@@ -53,15 +64,17 @@ export class TimeFormat extends React.PureComponent {
 
 TimeFormat.propTypes = {
   // dispatch: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   timeFormat: makeSelectTimeFormat(),
+  schedule: makeSelectSchedule(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
+    setSelectedFormat: selectedFormat => 
+      dispatch(setSelectedFormatAction(selectedFormat)),
     dispatch,
   };
 }

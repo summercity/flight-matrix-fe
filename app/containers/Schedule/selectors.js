@@ -11,12 +11,16 @@ const selectScheduleDomain = state => state.get('schedule', initialState);
  * Other specific selectors
  */
 
+
 /**
  * Default selector used by Schedule
  */
+
 
 const makeSelectSchedule = () =>
   createSelector(selectScheduleDomain, substate => substate.toJS());
 
 export default makeSelectSchedule;
-export { selectScheduleDomain };
+export { 
+  selectScheduleDomain,
+};
