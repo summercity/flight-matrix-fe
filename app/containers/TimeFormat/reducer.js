@@ -5,10 +5,7 @@
  */
 
 import { fromJS } from 'immutable';
-import { 
-  DEFAULT_ACTION,
-  SET_SELECTED_FORMAT
-} from './constants';
+import { DEFAULT_ACTION, SET_SELECTED_FORMAT } from './constants';
 import { minutes, hourly, headers } from './data';
 
 export const initialState = fromJS({

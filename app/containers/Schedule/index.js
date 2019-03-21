@@ -43,22 +43,22 @@ export class Schedule extends React.Component {
 
   componentDidMount() {
     const { schedules } = this.props.schedule;
-    const { selectedFormat } = this.props.timeFormat
+    const { selectedFormat } = this.props.timeFormat;
     const preparedSchedules = Schedules({ schedules, selectedFormat });
     this.setState({ preparedSchedules });
   }
 
-  componentDidUpdate (nextProps) {
+  componentDidUpdate(nextProps) {
     const { selectedFormat } = this.props.timeFormat;
     const { schedules } = this.props.schedule;
-    if (selectedFormat != nextProps.timeFormat.selectedFormat) {
+    if (selectedFormat !== nextProps.timeFormat.selectedFormat) {
       const preparedSchedules = Schedules({ schedules, selectedFormat });
-      this.setState({ selectedFormat, preparedSchedules });
+      this.setState({ preparedSchedules });
     }
   }
 
   handleTerminal = terminal => {
-    const { schedules } = this.props.schedule
+    const { schedules } = this.props.schedule;
     const { selectedFormat } = this.props.timeFormat;
     const preparedSchedules = Schedules({ schedules, selectedFormat });
     let filteredData = [];
@@ -77,13 +77,12 @@ export class Schedule extends React.Component {
     } else {
       filteredData = preparedSchedules;
     }
-
   };
 
   render() {
     const { classes } = this.props;
     const { preparedSchedules } = this.state;
-    const { headers, selectedFormat } = this.props.timeFormat
+    const { headers, selectedFormat } = this.props.timeFormat;
     return (
       <div className={classes.root}>
         <Helmet>
@@ -150,11 +149,13 @@ export class Schedule extends React.Component {
 Schedule.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
+  schedule: PropTypes.object.isRequired,
+  timeFormat: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   schedule: makeSelectSchedule(),
-  timeFormat: makeSelectTimeFormat()
+  timeFormat: makeSelectTimeFormat(),
 });
 
 function mapDispatchToProps(dispatch) {

@@ -4,10 +4,7 @@
  *
  */
 
-import { 
-  DEFAULT_ACTION ,
-  SET_SELECTED_FORMAT
-} from './constants';
+import { DEFAULT_ACTION, SET_SELECTED_FORMAT } from './constants';
 
 export function defaultAction() {
   return {
@@ -21,6 +18,6 @@ export function defaultAction() {
 export function setSelectedFormatAction(selectedFormat) {
   return {
     type: SET_SELECTED_FORMAT,
-    selectedFormat
+    selectedFormat,
   };
 }
