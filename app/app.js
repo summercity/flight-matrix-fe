@@ -49,11 +49,11 @@ const theme = createMuiTheme({
     MuiToggleButton: {
       root: {
         '&$selected': {
-          color: '#FFD600;'
-        }
-      }
-    }
-  }
+          color: '#FFD600;',
+        },
+      },
+    },
+  },
 });
 
 // Create redux store with history
