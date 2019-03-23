@@ -11,7 +11,6 @@ import { Helmet } from 'react-helmet';
 // import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { filter, flatMapDeep, orderBy } from 'lodash';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
@@ -19,14 +18,19 @@ import injectReducer from 'utils/injectReducer';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import BackIcon from '@material-ui/icons/ArrowBackIos';
+import ForwardIcon from '@material-ui/icons/ArrowForwardIos';
 
 // import messages from './messages';
 import saga from './saga';
 import reducer from './reducer';
 import makeSelectSchedule from './selectors';
 import makeSelectTimeFormat from '../TimeFormat/selectors';
+import makeSelectTerminals from '../Terminals/selectors';
 
-import { Schedules } from './helpers';
+import { Schedules, filterByTerminal } from './helpers';
+import { paginatedData } from '../../utils/helpers';
 import Column from '../../components/Column';
 import Terminals from '../Terminals';
 import TimeFormat from '../TimeFormat';
@@ -38,55 +42,106 @@ export class Schedule extends React.Component {
     super(props);
     this.state = {
       preparedSchedules: [],
+      currentPage: 1,
+      totalPages: 0,
     };
   }
 
   componentDidMount() {
-    const { schedules } = this.props.schedule;
+    const { schedules, pageSize } = this.props.schedule;
     const { selectedFormat } = this.props.timeFormat;
     const preparedSchedules = Schedules({ schedules, selectedFormat });
-    this.setState({ preparedSchedules });
+
+    const r = paginatedData(preparedSchedules, 1, pageSize);
+    this.setState({
+      preparedSchedules,
+      totalPages: r.totalPages,
+      currentPage: 1,
+    });
   }
 
   componentDidUpdate(nextProps) {
     const { selectedFormat } = this.props.timeFormat;
-    const { schedules } = this.props.schedule;
-    if (selectedFormat !== nextProps.timeFormat.selectedFormat) {
-      const preparedSchedules = Schedules({ schedules, selectedFormat });
-      this.setState({ preparedSchedules });
-    }
-  }
-
-  handleTerminal = terminal => {
-    const { schedules } = this.props.schedule;
-    const { selectedFormat } = this.props.timeFormat;
+    const { selectedTerminals } = this.props.terminals;
+    const { schedules, pageSize } = this.props.schedule;
     const preparedSchedules = Schedules({ schedules, selectedFormat });
-    let filteredData = [];
-    if (terminal.length > 0) {
-      Object.keys(terminal).forEach(t => {
-        const r = filter(preparedSchedules, { terminal: terminal[t] });
-        if (r.length > 0) filteredData.push(r);
-      });
-      // Todo Create Order State
-      const orderState = orderBy(
-        flatMapDeep(filteredData),
-        ['terminal'],
-        ['asc'],
-      );
-      this.setState({ preparedSchedules: orderState });
-    } else {
-      filteredData = preparedSchedules;
-    }
-  };
+
+    this.timeFormatSideEffect({
+      selectedFormat,
+      nextProps,
+      preparedSchedules,
+      pageSize,
+    });
+    this.terminalsSideEffect({
+      selectedTerminals,
+      nextProps,
+      preparedSchedules,
+      pageSize,
+    });
+  }
 
   handleSelectedFlight = rd => {
     console.log(rd);
   };
 
+  pageController = move => {
+    const { totalPages } = this.state;
+    let { currentPage } = this.state;
+    if (move === '@prev') {
+      if (currentPage !== 1) {
+        currentPage -= 1;
+      }
+    } else if (move === '@next') {
+      if (currentPage !== totalPages) {
+        currentPage += 1;
+      }
+    }
+    this.setState({ currentPage });
+  };
+
+  // Side Effects
+  terminalsSideEffect({
+    selectedTerminals,
+    nextProps,
+    preparedSchedules,
+    pageSize,
+  }) {
+    if (selectedTerminals !== nextProps.terminals.selectedTerminals) {
+      const filtered = filterByTerminal({
+        preparedSchedules,
+        selectedTerminals,
+      });
+      const r = paginatedData(filtered, 1, pageSize);
+      this.setState({
+        preparedSchedules: filtered,
+        totalPages: r.totalPages,
+        currentPage: 1,
+      });
+    }
+  }
+
+  timeFormatSideEffect({
+    selectedFormat,
+    nextProps,
+    preparedSchedules,
+    pageSize,
+  }) {
+    if (selectedFormat !== nextProps.timeFormat.selectedFormat) {
+      const r = paginatedData(preparedSchedules, 1, pageSize);
+      this.setState({
+        preparedSchedules,
+        totalPages: r.totalPages,
+        currentPage: 1,
+      });
+    }
+  }
+
   render() {
     const { classes } = this.props;
-    const { preparedSchedules } = this.state;
+    const { pageSize } = this.props.schedule;
+    const { preparedSchedules, currentPage } = this.state;
     const { headers, selectedFormat } = this.props.timeFormat;
+    const pageData = paginatedData(preparedSchedules, currentPage, pageSize);
     return (
       <div className={classes.root}>
         <Helmet>
@@ -94,6 +149,28 @@ export class Schedule extends React.Component {
           <meta name="description" content="Description of Schedule" />
         </Helmet>
         <TimeFormat />
+        {/* Todo make a separate component */}
+        <Paper>
+          <div>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              onClick={() => this.pageController('@prev')}
+            >
+              <BackIcon />
+            </Button>
+            <span>{`Page: ${pageData.page} of ${pageData.totalPages}`}</span>
+            <Button
+              variant="contained"
+              color="primary"
+              className={classes.button}
+              onClick={() => this.pageController('@next')}
+            >
+              <ForwardIcon />
+            </Button>
+          </div>
+        </Paper>
         <Paper className={classes.paper}>
           <table className={classes.tableFixed}>
             <thead>
@@ -104,10 +181,10 @@ export class Schedule extends React.Component {
                   </th>
                 ))}
               </tr>
-              <Terminals onChange={this.handleTerminal} />
+              <Terminals />
             </thead>
             <tbody>
-              {preparedSchedules.map(s => (
+              {pageData.data.map(s => (
                 <tr
                   className={classNames(classes.tr, classes.dataDetails)}
                   key={s.id}
@@ -133,7 +210,7 @@ export class Schedule extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {preparedSchedules.map(s => (
+              {pageData.data.map(s => (
                 <tr
                   className={classNames(classes.tr, classes.controls)}
                   key={s.id}
@@ -165,11 +242,13 @@ Schedule.propTypes = {
   classes: PropTypes.object.isRequired,
   schedule: PropTypes.object.isRequired,
   timeFormat: PropTypes.object.isRequired,
+  terminals: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   schedule: makeSelectSchedule(),
   timeFormat: makeSelectTimeFormat(),
+  terminals: makeSelectTerminals(),
 });
 
 function mapDispatchToProps(dispatch) {

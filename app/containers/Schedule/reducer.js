@@ -10,6 +10,7 @@ import { schedulesFaker } from './fakers';
 
 export const initialState = fromJS({
   schedules: schedulesFaker || [], // Todo convert to API
+  pageSize: 10,
 });
 
 function scheduleReducer(state = initialState, action) {

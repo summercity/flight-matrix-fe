@@ -1,3 +1,5 @@
+import { filter, flatMapDeep, orderBy } from 'lodash';
+
 export function Minutes(dep) {
   const departure = dep;
   const a = departure.split(':'); // split it at the colons
@@ -55,4 +57,17 @@ export function Schedules({ schedules, selectedFormat }) {
   });
 
   return preparedSchedules || [];
+}
+
+export function filterByTerminal({ preparedSchedules, selectedTerminals }) {
+  const filteredData = [];
+  if (selectedTerminals.length > 0) {
+    Object.keys(selectedTerminals).forEach(t => {
+      const r = filter(preparedSchedules, { terminal: selectedTerminals[t] });
+      if (r.length > 0) filteredData.push(r);
+    });
+    // Todo Create Order State
+    return orderBy(flatMapDeep(filteredData), ['departure'], ['asc']);
+  }
+  return {};
 }

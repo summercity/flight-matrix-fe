@@ -1,5 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
+import { createStructuredSelector } from 'reselect';
+import { compose } from 'redux';
+
+import injectSaga from 'utils/injectSaga';
+import injectReducer from 'utils/injectReducer';
+
 import { withStyles } from '@material-ui/core/styles';
 
 import ToggleButton from '@material-ui/lab/ToggleButton';
@@ -10,9 +18,14 @@ import Looks3 from '@material-ui/icons/Looks3';
 import Looks4 from '@material-ui/icons/Looks4';
 import messages from './messages';
 
+import saga from './saga';
+import reducer from './reducer';
+import { setSelectedTerminalsAction } from './actions';
+import makeSelectTerminals from './selectors';
+
 const styles = theme => ({
   root: {
-    background: '#D50000',
+    background: '#023E54',
     padding: '0 0',
   },
 
@@ -21,10 +34,11 @@ const styles = theme => ({
   },
 
   terminals: {
-    backgroundColor: '#FFD600',
-    color: '#000',
+    backgroundColor: '#023E54',
+    color: '#fff',
     border: '1px solid #000',
     textAlign: 'center',
+    fontWeight: 600,
   },
 
   toggleContainer: {
@@ -41,23 +55,15 @@ const styles = theme => ({
   },
 });
 
-class Terminals extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      terminal: ['1', '2', '3'],
-    };
-  }
-
-  handdleChange = (event, terminal) => {
-    this.setState({ terminal });
-    this.props.onChange(terminal);
+export class Terminals extends React.Component {
+  handdleChange = (event, terminals) => {
+    this.props.setSelectedTerminals(terminals);
   };
 
   render() {
     const { classes } = this.props;
 
-    const { terminal } = this.state;
+    const { selectedTerminals } = this.props.terminals;
     return (
       <React.Fragment>
         <tr>
@@ -67,7 +73,7 @@ class Terminals extends React.Component {
             </span>
             <ToggleButtonGroup
               className={classes.root}
-              value={terminal}
+              value={selectedTerminals}
               onChange={this.handdleChange}
             >
               <ToggleButton className={classes.toggleButton} value="1">
@@ -85,16 +91,41 @@ class Terminals extends React.Component {
             </ToggleButtonGroup>
           </td>
         </tr>
-        {/* <Grid container spacing={16}>
-          <Grid item xs={12} sm={6}>
-            <div className={classes.toggleContainer}>
-
-            </div>
-          </Grid>
-        </Grid> */}
       </React.Fragment>
     );
   }
 }
 
-export default withStyles(styles)(Terminals);
+Terminals.propTypes = {
+  // dispatch: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired,
+  terminals: PropTypes.object.isRequired,
+  setSelectedTerminals: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = createStructuredSelector({
+  terminals: makeSelectTerminals(),
+});
+
+function mapDispatchToProps(dispatch) {
+  return {
+    setSelectedTerminals: selectedTerminals =>
+      dispatch(setSelectedTerminalsAction(selectedTerminals)),
+    dispatch,
+  };
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+const withReducer = injectReducer({ key: 'terminals', reducer });
+const withSaga = injectSaga({ key: 'terminals', saga });
+
+export default compose(
+  withReducer,
+  withSaga,
+  withConnect,
+  withStyles(styles),
+)(Terminals);

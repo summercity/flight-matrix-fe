@@ -608,7 +608,7 @@ const hourly = [
   {
     id: 17,
     key: 'acc7c33d',
-    time: '',
+    time: '17:00',
   },
   {
     id: 18,
