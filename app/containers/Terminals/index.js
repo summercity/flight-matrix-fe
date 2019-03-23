@@ -4,15 +4,26 @@ import { withStyles } from '@material-ui/core/styles';
 
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
+import LooksOne from '@material-ui/icons/LooksOne';
+import LooksTwo from '@material-ui/icons/LooksTwo';
+import Looks3 from '@material-ui/icons/Looks3';
+import Looks4 from '@material-ui/icons/Looks4';
 import messages from './messages';
 
 const styles = theme => ({
+  root: {
+    background: '#FF1744',
+    padding: '0 0',
+  },
+
+  toggleButton: {
+    padding: '0 0',
+  },
+
   terminals: {
     backgroundColor: '#FFD600',
     color: '#000',
-    fontSize: 14,
     border: '1px solid #000',
-    padding: 2,
     textAlign: 'center',
   },
 
@@ -24,6 +35,9 @@ const styles = theme => ({
     justifyContent: 'flex-start',
     margin: `${theme.spacing.unit}px 0`,
     background: theme.palette.background.default,
+  },
+  icon: {
+    fontSize: '50px',
   },
 });
 
@@ -51,11 +65,23 @@ class Terminals extends React.Component {
             <span>
               <FormattedMessage {...messages.terminals} />
             </span>
-            <ToggleButtonGroup value={terminal} onChange={this.handdleChange}>
-              <ToggleButton value="1">1</ToggleButton>
-              <ToggleButton value="2">2</ToggleButton>
-              <ToggleButton value="3">3</ToggleButton>
-              <ToggleButton value="4">4</ToggleButton>
+            <ToggleButtonGroup
+              className={classes.root}
+              value={terminal}
+              onChange={this.handdleChange}
+            >
+              <ToggleButton className={classes.toggleButton} value="1">
+                <LooksOne className={classes.icon} />
+              </ToggleButton>
+              <ToggleButton className={classes.toggleButton} value="2">
+                <LooksTwo className={classes.icon} />
+              </ToggleButton>
+              <ToggleButton className={classes.toggleButton} value="3">
+                <Looks3 className={classes.icon} />
+              </ToggleButton>
+              <ToggleButton className={classes.toggleButton} value="4">
+                <Looks4 className={classes.icon} />
+              </ToggleButton>
             </ToggleButtonGroup>
           </td>
         </tr>

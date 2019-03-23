@@ -75,7 +75,7 @@ const Styles = theme => ({
   },
 
   td: {
-    backgroundColor: '#023E54',
+    // backgroundColor: '#023E54',
     color: '#00C853',
     fontSize: 12,
     fontWeight: 700,
@@ -86,18 +86,26 @@ const Styles = theme => ({
     height: '36px',
   },
 
-  icon: {
+  iconPending: {
+    color: '#76FF03',
     fontSize: 30,
     writingMode: 'vertical-rl',
     transform: 'rotate(90deg)',
   },
 
-  rightIcon: {
-    marginLeft: theme.spacing.unit,
+  iconCancelled: {
+    color: '#D50000 !important',
+    fontSize: 30,
   },
 
-  iconSmall: {
-    fontSize: 20,
+  iconOnSite: {
+    color: '#FFFF00 !important',
+    fontSize: 30,
+  },
+
+  iconCompleted: {
+    color: '#FF3D00 !important',
+    fontSize: 30,
   },
 
   toggleContainer: {
@@ -109,18 +117,18 @@ const Styles = theme => ({
     margin: `${theme.spacing.unit}px 0`,
     background: theme.palette.background.default,
   },
+
+  dataDetails: {
+    backgroundColor: '#023E54',
+  },
+
+  controls: {
+    backgroundColor: '#023E54',
+    '&:hover': {
+      cursor: 'pointer',
+      backgroundColor: '#9E9E9E',
+    },
+  },
 });
-
-// position: absolute;
-//     width: 5em;
-//     left: 0;
-//     top: auto;
-//     border-right: 0px none black;
-//     border-top-width: 3px;
-//     margin-top: -3px;
-//     z-index: 109;
-//     background: #fff;
-
-// }
 
 export default Styles;

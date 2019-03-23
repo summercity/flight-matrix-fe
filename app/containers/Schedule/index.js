@@ -16,7 +16,7 @@ import { filter, flatMapDeep, orderBy } from 'lodash';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 
-// import classNames from 'classnames';
+import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 
@@ -79,6 +79,10 @@ export class Schedule extends React.Component {
     }
   };
 
+  handleSelectedFlight = rd => {
+    console.log(rd);
+  };
+
   render() {
     const { classes } = this.props;
     const { preparedSchedules } = this.state;
@@ -104,7 +108,10 @@ export class Schedule extends React.Component {
             </thead>
             <tbody>
               {preparedSchedules.map(s => (
-                <tr className={classes.tr} key={s.id}>
+                <tr
+                  className={classNames(classes.tr, classes.dataDetails)}
+                  key={s.id}
+                >
                   <td className={classes.td}>{s.flightNo}</td>
                   <td className={classes.td}>{s.destination}</td>
                   <td className={classes.td}>{s.equipment}</td>
@@ -127,12 +134,19 @@ export class Schedule extends React.Component {
             </thead>
             <tbody>
               {preparedSchedules.map(s => (
-                <tr className={classes.tr} key={s.id}>
+                <tr
+                  className={classNames(classes.tr, classes.controls)}
+                  key={s.id}
+                  onClick={() => this.handleSelectedFlight(s)}
+                >
                   {s.types.map(t => (
                     <Column
                       key={`${t.key}child`}
                       className={classes.td}
-                      classIcon={classes.icon}
+                      iconPending={classes.iconPending}
+                      iconCancelled={classes.iconCancelled}
+                      iconOnSite={classes.iconOnSite}
+                      iconCompleted={classes.iconCompleted}
                       type={t.type}
                     />
                   ))}
