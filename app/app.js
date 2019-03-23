@@ -45,6 +45,15 @@ const theme = createMuiTheme({
   typography: {
     useNextVariants: true,
   },
+  overrides: {
+    MuiToggleButton: {
+      root: {
+        '&$selected': {
+          color: '#FFD600;'
+        }
+      }
+    }
+  }
 });
 
 // Create redux store with history

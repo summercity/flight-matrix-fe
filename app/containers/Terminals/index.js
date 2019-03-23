@@ -12,7 +12,7 @@ import messages from './messages';
 
 const styles = theme => ({
   root: {
-    background: '#FF1744',
+    background: '#D50000',
     padding: '0 0',
   },
 

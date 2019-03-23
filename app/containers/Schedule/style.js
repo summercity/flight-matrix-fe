@@ -94,8 +94,10 @@ const Styles = theme => ({
   },
 
   iconCancelled: {
-    color: '#D50000 !important',
+    color: '#FF1744 !important',
     fontSize: 30,
+    writingMode: 'vertical-rl',
+    transform: 'rotate(90deg)',
   },
 
   iconOnSite: {
