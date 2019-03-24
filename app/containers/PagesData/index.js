@@ -15,7 +15,6 @@ import injectReducer from 'utils/injectReducer';
 import Button from '@material-ui/core/Button';
 import BackIcon from '@material-ui/icons/ArrowBackIos';
 import ForwardIcon from '@material-ui/icons/ArrowForwardIos';
-import { setPageDataAction } from './actions';
 import makeSelectPagesData from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -23,7 +22,7 @@ import saga from './saga';
 /* eslint-disable react/prefer-stateless-function */
 export class PagesData extends React.Component {
   pageController = move => {
-    const { totalPages } = this.props.pagesData;
+    const { totalPages } = this.props.pagesData.pageData;
     let { currentPage } = this.props.pagesData;
 
     if (move === '@prev') {
@@ -35,12 +34,7 @@ export class PagesData extends React.Component {
         currentPage += 1;
       }
     }
-    
-    // const pageData = 
-    // this.props.setPageData();
-    // console.log(this.props.pagesData)
     this.props.onChange(currentPage);
-    
   };
 
   render() {
@@ -71,7 +65,7 @@ PagesData.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   // classes: PropTypes.object.isRequired,
   pagesData: PropTypes.object.isRequired,
-  setPageData: PropTypes.func.isRequired,
+  onChange: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -80,7 +74,6 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    setPageData: pageDta =>dispatch(setPageDataAction(pageDta)),
     dispatch,
   };
 }

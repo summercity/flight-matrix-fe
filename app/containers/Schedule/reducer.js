@@ -5,10 +5,10 @@
  */
 
 import { fromJS } from 'immutable';
-import { 
+import {
   DEFAULT_ACTION,
   SET_SCHEDULES_ACTION,
-  SET_PREPARED_SCHEDULES_ACTION 
+  SET_PREPARED_SCHEDULES_ACTION,
 } from './constants';
 
 export const initialState = fromJS({

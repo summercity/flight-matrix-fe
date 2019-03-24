@@ -22,7 +22,7 @@ import Paper from '@material-ui/core/Paper';
 // import messages from './messages';
 import saga from './saga';
 import { getSchedulesAction } from './actions';
-import { setPageDataAction } from '../PagesData/actions'
+import { setPageDataAction } from '../PagesData/actions';
 import reducer from './reducer';
 import makeSelectSchedule from './selectors';
 import makeSelectTimeFormat from '../TimeFormat/selectors';
@@ -39,10 +39,6 @@ import Styles from './style';
 
 /* eslint-disable react/prefer-stateless-function */
 export class Schedule extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   async componentDidMount() {
     await this.props.getSchedules();
   }
@@ -106,7 +102,7 @@ export class Schedule extends React.Component {
     }
   }
 
-  handlePageChange = (currentPage) => {
+  handlePageChange = currentPage => {
     const { selectedTerminals } = this.props.terminals;
     const { pageSize } = this.props.pagesData;
     const { preparedSchedules } = this.props.schedule;
@@ -116,7 +112,7 @@ export class Schedule extends React.Component {
     });
     const pageData = paginatedData(filtered, currentPage, pageSize);
     this.props.setPageData(pageData, currentPage);
-  }
+  };
 
   render() {
     const { classes } = this.props;
@@ -144,19 +140,20 @@ export class Schedule extends React.Component {
               <Terminals />
             </thead>
             <tbody>
-              {pageData.data && pageData.data.map(s => (
-                <tr
-                  className={classNames(classes.tr, classes.dataDetails)}
-                  key={s.id}
-                >
-                  <td className={classes.td}>{s.flightNo}</td>
-                  <td className={classes.td}>{s.destination}</td>
-                  <td className={classes.td}>{s.equipment}</td>
-                  <td className={classes.td}>{s.terminal}</td>
-                  <td className={classes.td}>{s.departure}</td>
-                  <td className={classes.td}>{s.groundTime}</td>
-                </tr>
-              ))}
+              {pageData.data &&
+                pageData.data.map(s => (
+                  <tr
+                    className={classNames(classes.tr, classes.dataDetails)}
+                    key={s.id}
+                  >
+                    <td className={classes.td}>{s.flightNo}</td>
+                    <td className={classes.td}>{s.destination}</td>
+                    <td className={classes.td}>{s.equipment}</td>
+                    <td className={classes.td}>{s.terminal}</td>
+                    <td className={classes.td}>{s.departure}</td>
+                    <td className={classes.td}>{s.groundTime}</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
           <table className={classes.table}>
@@ -170,25 +167,26 @@ export class Schedule extends React.Component {
               </tr>
             </thead>
             <tbody>
-              {pageData.data && pageData.data.map(s => (
-                <tr
-                  className={classNames(classes.tr, classes.controls)}
-                  key={s.id}
-                  onClick={() => this.handleSelectedFlight(s)}
-                >
-                  {s.types.map(t => (
-                    <Column
-                      key={`${t.key}child`}
-                      className={classes.td}
-                      iconPending={classes.iconPending}
-                      iconCancelled={classes.iconCancelled}
-                      iconOnSite={classes.iconOnSite}
-                      iconCompleted={classes.iconCompleted}
-                      type={t.type}
-                    />
-                  ))}
-                </tr>
-              ))}
+              {pageData.data &&
+                pageData.data.map(s => (
+                  <tr
+                    className={classNames(classes.tr, classes.controls)}
+                    key={s.id}
+                    onClick={() => this.handleSelectedFlight(s)}
+                  >
+                    {s.types.map(t => (
+                      <Column
+                        key={`${t.key}child`}
+                        className={classes.td}
+                        iconPending={classes.iconPending}
+                        iconCancelled={classes.iconCancelled}
+                        iconOnSite={classes.iconOnSite}
+                        iconCompleted={classes.iconCompleted}
+                        type={t.type}
+                      />
+                    ))}
+                  </tr>
+                ))}
             </tbody>
           </table>
         </Paper>
@@ -218,7 +216,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     getSchedules: () => dispatch(getSchedulesAction()),
-    setPageData: pageDta =>dispatch(setPageDataAction(pageDta)),
+    setPageData: pageDta => dispatch(setPageDataAction(pageDta)),
     dispatch,
   };
 }

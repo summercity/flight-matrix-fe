@@ -18,7 +18,8 @@ function pagesDataReducer(state = initialState, action) {
     case DEFAULT_ACTION:
       return state;
     case SET_PAGE_DATA:
-      return state.set('pageData', action.pageData)
+      return state
+        .set('pageData', action.pageData)
         .set('currentPage', action.currentPage);
     default:
       return state;

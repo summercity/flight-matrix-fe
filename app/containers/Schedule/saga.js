@@ -1,12 +1,4 @@
-import {
-  all,
-  fork,
-  take,
-  call,
-  put,
-  select,
-  takeLatest,
-} from 'redux-saga/effects';
+import { all, fork, call, put, select, takeLatest } from 'redux-saga/effects';
 import services from '../../services';
 
 import { Schedules } from './helpers';
@@ -15,9 +7,7 @@ import { paginatedData } from '../../utils/helpers';
 import { selectSelectedFormat } from '../TimeFormat/selectors';
 import makeSelectPagesData from '../PagesData/selectors';
 
-import { 
-  GET_SCHEDULES_ACTION,
-} from './constants';
+import { GET_SCHEDULES_ACTION } from './constants';
 import { setPreparedSchedulesAction, setSchedulesAction } from './actions';
 import { setPageDataAction } from '../PagesData/actions';
 

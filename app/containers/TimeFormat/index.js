@@ -13,7 +13,6 @@ import { compose } from 'redux';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import Paper from '@material-ui/core/Paper';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { Schedules } from '../Schedule/helpers';
@@ -84,7 +83,7 @@ function mapDispatchToProps(dispatch) {
   return {
     setSelectedFormat: selectedFormat =>
       dispatch(setSelectedFormatAction(selectedFormat)),
-    setPreparedSchedules: preparedSchedules => 
+    setPreparedSchedules: preparedSchedules =>
       dispatch(setPreparedSchedulesAction(preparedSchedules)),
     dispatch,
   };

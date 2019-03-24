@@ -6,10 +6,8 @@
 
 import {
   DEFAULT_ACTION,
-  
   GET_SCHEDULES_ACTION,
   SET_SCHEDULES_ACTION,
-
   SET_PREPARED_SCHEDULES_ACTION,
 } from './constants';
 
@@ -31,7 +29,6 @@ export function setSchedulesAction(schedules) {
     schedules,
   };
 }
-
 
 export function setPreparedSchedulesAction(preparedSchedules) {
   return {

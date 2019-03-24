@@ -16,6 +16,6 @@ export function setPageDataAction(pageData, currentPage = 1) {
   return {
     type: SET_PAGE_DATA,
     pageData,
-    currentPage
+    currentPage,
   };
 }
