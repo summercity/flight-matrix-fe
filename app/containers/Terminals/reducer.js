@@ -8,7 +8,6 @@ import { fromJS } from 'immutable';
 import { DEFAULT_ACTION, SET_SELECTED_TERMINALS } from './constants';
 
 export const initialState = fromJS({
-  terminals: ['1', '2', '3'],
   selectedTerminals: ['1', '2', '3'],
 });
 
