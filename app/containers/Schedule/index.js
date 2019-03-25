@@ -46,10 +46,11 @@ export class Schedule extends React.Component {
   componentDidUpdate(nextProps) {
     const { selectedFormat } = this.props.timeFormat;
     const { selectedTerminals } = this.props.terminals;
-    const { initialPage, pageSize } = this.props.pagesData;
+    const { initialPage, currentPage, pageSize } = this.props.pagesData;
     const { preparedSchedules } = this.props.schedule;
 
     this.timeFormatSideEffect({
+      currentPage,
       selectedTerminals,
       selectedFormat,
       nextProps,
@@ -70,6 +71,24 @@ export class Schedule extends React.Component {
   };
 
   // Side Effects
+  timeFormatSideEffect({
+    currentPage,
+    selectedTerminals,
+    selectedFormat,
+    nextProps,
+    preparedSchedules,
+    pageSize,
+  }) {
+    if (selectedFormat !== nextProps.timeFormat.selectedFormat) {
+      const filtered = filterByTerminal({
+        preparedSchedules,
+        selectedTerminals,
+      });
+      const pageData = paginatedData(filtered, currentPage, pageSize);
+      this.props.setPageData(pageData);
+    }
+  }
+
   terminalsSideEffect({
     initialPage,
     selectedTerminals,
@@ -84,23 +103,6 @@ export class Schedule extends React.Component {
       });
       this.props.setCurrentPage(initialPage);
       const pageData = paginatedData(filtered, initialPage, pageSize);
-      this.props.setPageData(pageData);
-    }
-  }
-
-  timeFormatSideEffect({
-    selectedTerminals,
-    selectedFormat,
-    nextProps,
-    preparedSchedules,
-    pageSize,
-  }) {
-    if (selectedFormat !== nextProps.timeFormat.selectedFormat) {
-      const filtered = filterByTerminal({
-        preparedSchedules,
-        selectedTerminals,
-      });
-      const pageData = paginatedData(filtered, pageSize);
       this.props.setPageData(pageData);
     }
   }
@@ -127,8 +129,10 @@ export class Schedule extends React.Component {
           <title>Schedule</title>
           <meta name="description" content="Description of Schedule" />
         </Helmet>
-        <TimeFormat />
-        <PagesData onChange={this.handlePageChange} />
+        <div className={classes.topControl}>
+          <TimeFormat />
+          <PagesData onChange={this.handlePageChange} />
+        </div>
         {/* Todo make a separate component */}
         <Paper className={classes.paper}>
           <table className={classes.tableFixed}>

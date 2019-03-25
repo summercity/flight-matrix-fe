@@ -53,6 +53,19 @@ const theme = createMuiTheme({
         },
       },
     },
+
+    MuiTab: {
+      textColorPrimary: {
+        '&$selected': {
+          color: '#023E54',
+        },
+      },
+    },
+    MuiPrivateTabIndicator: {
+      colorPrimary: {
+        backgroundColor: '#023E54',
+      },
+    },
   },
 });
 

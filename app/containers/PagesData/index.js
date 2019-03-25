@@ -12,6 +12,9 @@ import { compose } from 'redux';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
+
+import { withStyles } from '@material-ui/core/styles';
+
 import Button from '@material-ui/core/Button';
 import BackIcon from '@material-ui/icons/ArrowBackIos';
 import ForwardIcon from '@material-ui/icons/ArrowForwardIos';
@@ -19,6 +22,7 @@ import { setCurrentPageAction } from './actions';
 import makeSelectPagesData from './selectors';
 import reducer from './reducer';
 import saga from './saga';
+import Styles from './style';
 
 /* eslint-disable react/prefer-stateless-function */
 export class PagesData extends React.Component {
@@ -40,18 +44,23 @@ export class PagesData extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
     const { pageData } = this.props.pagesData;
     return (
-      <div>
+      <div className={classes.root}>
         <Button
+          className={classes.arrowButton}
           variant="contained"
           color="primary"
           onClick={() => this.pageController('@prev')}
         >
           <BackIcon />
         </Button>
-        <span>{`Page: ${pageData.page} of ${pageData.totalPages}`}</span>
+        <div className={classes.pages}>
+          <span>{`Page: ${pageData.page} of ${pageData.totalPages}`}</span>
+        </div>
         <Button
+          className={classes.arrowButton}
           variant="contained"
           color="primary"
           onClick={() => this.pageController('@next')}
@@ -66,6 +75,7 @@ export class PagesData extends React.Component {
 PagesData.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   // classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
   pagesData: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
   setCurrentPage: PropTypes.func.isRequired,
@@ -94,4 +104,5 @@ export default compose(
   withReducer,
   withSaga,
   withConnect,
+  withStyles(Styles),
 )(PagesData);

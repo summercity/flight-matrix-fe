@@ -13,6 +13,9 @@ import { compose } from 'redux';
 
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
+
+import { withStyles } from '@material-ui/core/styles';
+
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { Schedules } from '../Schedule/helpers';
@@ -25,6 +28,7 @@ import makeSelectSchedule from '../Schedule/selectors';
 
 import reducer from './reducer';
 import saga from './saga';
+import Styles from './style';
 
 // import messages from './messages';
 
@@ -50,16 +54,19 @@ export class TimeFormat extends React.PureComponent {
   };
 
   render() {
+    const { classes } = this.props;
+    console.log('a', classes);
     return (
       <div>
         <Tabs
+          classes={{ root: classes.root }}
           value={this.state.value}
           indicatorColor="primary"
           textColor="primary"
           onChange={this.handleChange}
         >
-          <Tab label="EVERY 15 MINUTES" />
-          <Tab label="EVERY HOUR" />
+          <Tab className={classes.tab} label="EVERY 15 MINUTES" />
+          <Tab className={classes.tab} label="EVERY HOUR" />
         </Tabs>
       </div>
     );
@@ -68,6 +75,7 @@ export class TimeFormat extends React.PureComponent {
 
 TimeFormat.propTypes = {
   // dispatch: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired,
   timeFormat: PropTypes.object.isRequired,
   schedule: PropTypes.object.isRequired,
   setSelectedFormat: PropTypes.func.isRequired,
@@ -101,4 +109,5 @@ export default compose(
   withReducer,
   withSaga,
   withConnect,
+  withStyles(Styles),
 )(TimeFormat);

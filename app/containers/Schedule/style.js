@@ -141,6 +141,10 @@ const Styles = theme => ({
     marginBottom: 10,
     top: 10,
   },
+
+  topControl: {
+    marginTop: -20,
+  },
 });
 
 export default Styles;
