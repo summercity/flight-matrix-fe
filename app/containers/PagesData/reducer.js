@@ -9,7 +9,7 @@ import { DEFAULT_ACTION, SET_PAGE_DATA, SET_CURRENT_PAGE } from './constants';
 
 export const initialState = fromJS({
   initialPage: 1,
-  pageSize: 3,
+  pageSize: 1,
   currentPage: 1,
   pageData: [],
 });

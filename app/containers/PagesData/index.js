@@ -18,6 +18,9 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import BackIcon from '@material-ui/icons/ArrowBackIos';
 import ForwardIcon from '@material-ui/icons/ArrowForwardIos';
+import SkipPrevIcon from '@material-ui/icons/SkipPrevious';
+import SkipNextIcon from '@material-ui/icons/SkipNext';
+
 import { setCurrentPageAction } from './actions';
 import makeSelectPagesData from './selectors';
 import reducer from './reducer';
@@ -31,12 +34,22 @@ export class PagesData extends React.Component {
     let { currentPage } = this.props.pagesData;
 
     if (move === '@prev') {
-      if (currentPage !== 1) {
+      if (currentPage !== 1 && currentPage > 0) {
         currentPage -= 1;
       }
     } else if (move === '@next') {
-      if (currentPage !== totalPages) {
+      if (currentPage !== totalPages && currentPage < totalPages) {
         currentPage += 1;
+      }
+    } else if (move === '@skip-prev') {
+      if (currentPage !== 1) {
+        currentPage -= 5;
+        currentPage = currentPage < 0 ? 1 : currentPage;
+      }
+    } else if (move === '@skip-next') {
+      if (currentPage !== totalPages) {
+        currentPage += 5;
+        currentPage = currentPage > totalPages ? totalPages : currentPage;
       }
     }
     this.props.setCurrentPage(currentPage);
@@ -48,6 +61,14 @@ export class PagesData extends React.Component {
     const { pageData } = this.props.pagesData;
     return (
       <div className={classes.root}>
+        <Button
+          className={classes.arrowButton}
+          variant="contained"
+          color="primary"
+          onClick={() => this.pageController('@skip-prev')}
+        >
+          <SkipPrevIcon />
+        </Button>
         <Button
           className={classes.arrowButton}
           variant="contained"
@@ -66,6 +87,14 @@ export class PagesData extends React.Component {
           onClick={() => this.pageController('@next')}
         >
           <ForwardIcon />
+        </Button>
+        <Button
+          className={classes.arrowButton}
+          variant="contained"
+          color="primary"
+          onClick={() => this.pageController('@skip-next')}
+        >
+          <SkipNextIcon />
         </Button>
       </div>
     );
