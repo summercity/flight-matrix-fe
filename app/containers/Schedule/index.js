@@ -23,6 +23,7 @@ import Paper from '@material-ui/core/Paper';
 import saga from './saga';
 import { getSchedulesAction } from './actions';
 import { setPageDataAction, setCurrentPageAction } from '../PagesData/actions';
+import { setOpenStatusAction } from '../Status/actions';
 import reducer from './reducer';
 import makeSelectSchedule from './selectors';
 import makeSelectTimeFormat from '../TimeFormat/selectors';
@@ -68,6 +69,7 @@ export class Schedule extends React.Component {
 
   handleSelectedFlight = rd => {
     console.log(rd);
+    this.props.setOpenStatus(true);
   };
 
   // Side Effects
@@ -208,13 +210,15 @@ export class Schedule extends React.Component {
 Schedule.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
-  getSchedules: PropTypes.func.isRequired,
-  setPageData: PropTypes.func.isRequired,
-  setCurrentPage: PropTypes.func.isRequired,
   schedule: PropTypes.object.isRequired,
   timeFormat: PropTypes.object.isRequired,
   terminals: PropTypes.object.isRequired,
   pagesData: PropTypes.object.isRequired,
+
+  getSchedules: PropTypes.func.isRequired,
+  setPageData: PropTypes.func.isRequired,
+  setCurrentPage: PropTypes.func.isRequired,
+  setOpenStatus: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -229,6 +233,7 @@ function mapDispatchToProps(dispatch) {
     getSchedules: () => dispatch(getSchedulesAction()),
     setPageData: pageDta => dispatch(setPageDataAction(pageDta)),
     setCurrentPage: currentPage => dispatch(setCurrentPageAction(currentPage)),
+    setOpenStatus: open => dispatch(setOpenStatusAction(open)),
     dispatch,
   };
 }

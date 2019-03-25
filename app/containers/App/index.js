@@ -16,11 +16,13 @@ import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import GlobalStyle from '../../global-styles';
 
 import TopNav from '../TopNav';
+import Status from '../Status';
 
 export default function App() {
   return (
     <div>
       <TopNav />
+      <Status />
       <Switch>
         <Route exact path="/" component={Schedule} />
         <Route component={NotFoundPage} />
