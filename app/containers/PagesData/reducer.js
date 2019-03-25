@@ -5,10 +5,11 @@
  */
 
 import { fromJS } from 'immutable';
-import { DEFAULT_ACTION, SET_PAGE_DATA } from './constants';
+import { DEFAULT_ACTION, SET_PAGE_DATA, SET_CURRENT_PAGE } from './constants';
 
 export const initialState = fromJS({
-  pageSize: 10,
+  initialPage: 1,
+  pageSize: 3,
   currentPage: 1,
   pageData: [],
 });
@@ -18,9 +19,9 @@ function pagesDataReducer(state = initialState, action) {
     case DEFAULT_ACTION:
       return state;
     case SET_PAGE_DATA:
-      return state
-        .set('pageData', action.pageData)
-        .set('currentPage', action.currentPage);
+      return state.set('pageData', action.pageData);
+    case SET_CURRENT_PAGE:
+      return state.set('currentPage', action.currentPage);
     default:
       return state;
   }

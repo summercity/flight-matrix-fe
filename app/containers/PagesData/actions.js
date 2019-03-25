@@ -4,7 +4,7 @@
  *
  */
 
-import { DEFAULT_ACTION, SET_PAGE_DATA } from './constants';
+import { DEFAULT_ACTION, SET_PAGE_DATA, SET_CURRENT_PAGE } from './constants';
 
 export function defaultAction() {
   return {
@@ -12,10 +12,16 @@ export function defaultAction() {
   };
 }
 
-export function setPageDataAction(pageData, currentPage = 1) {
+export function setPageDataAction(pageData) {
   return {
     type: SET_PAGE_DATA,
     pageData,
+  };
+}
+
+export function setCurrentPageAction(currentPage) {
+  return {
+    type: SET_CURRENT_PAGE,
     currentPage,
   };
 }

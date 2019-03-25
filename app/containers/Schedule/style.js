@@ -60,7 +60,6 @@ const Styles = theme => ({
     padding: 5,
     textAlign: 'center',
     minWidth: '50px',
-    height: '99px',
     overflow: 'hidden',
     letterSpacing: '0.0075em',
   },
@@ -68,6 +67,7 @@ const Styles = theme => ({
   spanHeaderTime: {
     writingMode: 'vertical-rl',
     transform: 'rotate(180deg)',
+    height: '45px',
   },
 
   tr: {
@@ -130,6 +130,16 @@ const Styles = theme => ({
       cursor: 'pointer',
       backgroundColor: '#9E9E9E',
     },
+  },
+
+  badges: {
+    backgroundColor: '#023E54',
+    fontWeight: 400,
+    fontSize: 15,
+    color: '#fff',
+    height: '25px',
+    marginBottom: 10,
+    top: 10,
   },
 });
 

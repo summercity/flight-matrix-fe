@@ -14,7 +14,6 @@ import {
 export const initialState = fromJS({
   schedules: {},
   preparedSchedules: {},
-  pageSize: 10,
 });
 
 function scheduleReducer(state = initialState, action) {

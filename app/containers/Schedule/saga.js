@@ -21,9 +21,9 @@ export function* getSchedules() {
     const preparedSchedules = Schedules({ schedules, selectedFormat });
     yield put(setPreparedSchedulesAction(preparedSchedules));
 
-    const { currentPage, pageSize } = yield select(makeSelectPagesData());
+    const { pageSize } = yield select(makeSelectPagesData());
 
-    const pageData = paginatedData(preparedSchedules, currentPage, pageSize);
+    const pageData = paginatedData(preparedSchedules, 1, pageSize);
     yield put(setPageDataAction(pageData));
   } catch (e) {
     console.log(e);

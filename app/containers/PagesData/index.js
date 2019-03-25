@@ -15,6 +15,7 @@ import injectReducer from 'utils/injectReducer';
 import Button from '@material-ui/core/Button';
 import BackIcon from '@material-ui/icons/ArrowBackIos';
 import ForwardIcon from '@material-ui/icons/ArrowForwardIos';
+import { setCurrentPageAction } from './actions';
 import makeSelectPagesData from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -34,6 +35,7 @@ export class PagesData extends React.Component {
         currentPage += 1;
       }
     }
+    this.props.setCurrentPage(currentPage);
     this.props.onChange(currentPage);
   };
 
@@ -66,6 +68,7 @@ PagesData.propTypes = {
   // classes: PropTypes.object.isRequired,
   pagesData: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
+  setCurrentPage: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -74,6 +77,7 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
+    setCurrentPage: currentPage => dispatch(setCurrentPageAction(currentPage)),
     dispatch,
   };
 }

@@ -22,7 +22,7 @@ import Paper from '@material-ui/core/Paper';
 // import messages from './messages';
 import saga from './saga';
 import { getSchedulesAction } from './actions';
-import { setPageDataAction } from '../PagesData/actions';
+import { setPageDataAction, setCurrentPageAction } from '../PagesData/actions';
 import reducer from './reducer';
 import makeSelectSchedule from './selectors';
 import makeSelectTimeFormat from '../TimeFormat/selectors';
@@ -46,7 +46,7 @@ export class Schedule extends React.Component {
   componentDidUpdate(nextProps) {
     const { selectedFormat } = this.props.timeFormat;
     const { selectedTerminals } = this.props.terminals;
-    const { pageSize } = this.props.pagesData;
+    const { initialPage, pageSize } = this.props.pagesData;
     const { preparedSchedules } = this.props.schedule;
 
     this.timeFormatSideEffect({
@@ -57,6 +57,7 @@ export class Schedule extends React.Component {
       pageSize,
     });
     this.terminalsSideEffect({
+      initialPage,
       selectedTerminals,
       nextProps,
       preparedSchedules,
@@ -70,6 +71,7 @@ export class Schedule extends React.Component {
 
   // Side Effects
   terminalsSideEffect({
+    initialPage,
     selectedTerminals,
     nextProps,
     preparedSchedules,
@@ -80,7 +82,8 @@ export class Schedule extends React.Component {
         preparedSchedules,
         selectedTerminals,
       });
-      const pageData = paginatedData(filtered, 1, pageSize);
+      this.props.setCurrentPage(initialPage);
+      const pageData = paginatedData(filtered, initialPage, pageSize);
       this.props.setPageData(pageData);
     }
   }
@@ -97,7 +100,7 @@ export class Schedule extends React.Component {
         preparedSchedules,
         selectedTerminals,
       });
-      const pageData = paginatedData(filtered, 1, pageSize);
+      const pageData = paginatedData(filtered, pageSize);
       this.props.setPageData(pageData);
     }
   }
@@ -161,6 +164,9 @@ export class Schedule extends React.Component {
               <tr className={classes.tr}>
                 {selectedFormat.map(m => (
                   <th key={m.key} className={classes.thTime} rowSpan="2">
+                    <div className={classes.badges}>
+                      <span>{99}</span>
+                    </div>
                     <span className={classes.spanHeaderTime}>{m.time}</span>
                   </th>
                 ))}
@@ -200,6 +206,7 @@ Schedule.propTypes = {
   classes: PropTypes.object.isRequired,
   getSchedules: PropTypes.func.isRequired,
   setPageData: PropTypes.func.isRequired,
+  setCurrentPage: PropTypes.func.isRequired,
   schedule: PropTypes.object.isRequired,
   timeFormat: PropTypes.object.isRequired,
   terminals: PropTypes.object.isRequired,
@@ -217,6 +224,7 @@ function mapDispatchToProps(dispatch) {
   return {
     getSchedules: () => dispatch(getSchedulesAction()),
     setPageData: pageDta => dispatch(setPageDataAction(pageDta)),
+    setCurrentPage: currentPage => dispatch(setCurrentPageAction(currentPage)),
     dispatch,
   };
 }

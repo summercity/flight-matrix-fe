@@ -10,6 +10,10 @@ const selectPagesDataDomain = state => state.get('pagesData', initialState);
 /**
  * Other specific selectors
  */
+const selectCurrentPage = () =>
+  createSelector(selectPagesDataDomain, subState =>
+    subState.get('currentPage'),
+  );
 
 /**
  * Default selector used by PagesData
@@ -19,4 +23,4 @@ const makeSelectPagesData = () =>
   createSelector(selectPagesDataDomain, substate => substate.toJS());
 
 export default makeSelectPagesData;
-export { selectPagesDataDomain };
+export { selectPagesDataDomain, selectCurrentPage };
