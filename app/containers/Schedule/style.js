@@ -145,6 +145,16 @@ const Styles = theme => ({
   topControl: {
     marginTop: -20,
   },
+
+  fabAdd: {
+    backgroundColor: '#023E54',
+    position: 'fixed',
+    bottom: 20,
+    right: 20,
+    '&:hover': {
+      backgroundColor: '#79CCCD',
+    },
+  },
 });
 
 export default Styles;

@@ -10,18 +10,6 @@ import CancelledIcon from '@material-ui/icons/AirplanemodeInactive';
 import OnSiteIcon from '@material-ui/icons/LocalGasStation';
 import CompletedIcon from '@material-ui/icons/CheckBox';
 
-// import PropTypes from 'prop-types';
-// import styled from 'styled-components';
-
-/* eslint-disable react/prefer-stateless-function */
-// class Column extends React.Component {
-//   render() {
-//     return (
-//       <td>HELLO {this.props.name}</td>
-//     );
-//   }
-// }
-
 function Column({
   type,
   className,

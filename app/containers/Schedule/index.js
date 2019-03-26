@@ -18,6 +18,8 @@ import injectReducer from 'utils/injectReducer';
 import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
 // import messages from './messages';
 import saga from './saga';
@@ -27,6 +29,7 @@ import {
   setOpenStatusAction,
   setSelectedFlightAction,
 } from '../Status/actions';
+import { setOpenStatusAction as setOpenStatusNonRecurringFormAction } from '../NonRecurring/actions';
 import reducer from './reducer';
 import makeSelectSchedule from './selectors';
 import makeSelectTimeFormat from '../TimeFormat/selectors';
@@ -124,6 +127,10 @@ export class Schedule extends React.Component {
     this.props.setPageData(pageData, currentPage);
   };
 
+  handleClickAdd = () => {
+    this.props.setOpenStatusNonRecurringForm(true);
+  };
+
   render() {
     const { classes } = this.props;
     const { pageData } = this.props.pagesData;
@@ -204,6 +211,15 @@ export class Schedule extends React.Component {
             </tbody>
           </table>
         </Paper>
+        <Fab
+          size="small"
+          color="secondary"
+          aria-label="Add"
+          className={classes.fabAdd}
+          onClick={this.handleClickAdd}
+        >
+          <AddIcon />
+        </Fab>
       </div>
     );
   }
@@ -222,6 +238,7 @@ Schedule.propTypes = {
   setCurrentPage: PropTypes.func.isRequired,
   setOpenStatus: PropTypes.func.isRequired,
   setSelectedFlight: PropTypes.func.isRequired,
+  setOpenStatusNonRecurringForm: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -237,6 +254,8 @@ function mapDispatchToProps(dispatch) {
     setPageData: pageDta => dispatch(setPageDataAction(pageDta)),
     setCurrentPage: currentPage => dispatch(setCurrentPageAction(currentPage)),
     setOpenStatus: open => dispatch(setOpenStatusAction(open)),
+    setOpenStatusNonRecurringForm: open =>
+      dispatch(setOpenStatusNonRecurringFormAction(open)),
     setSelectedFlight: selectedFlight =>
       dispatch(setSelectedFlightAction(selectedFlight)),
     dispatch,

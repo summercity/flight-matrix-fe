@@ -18,6 +18,7 @@ import GlobalStyle from '../../global-styles';
 import TopNav from '../TopNav';
 import Status from '../Status';
 import Confirmation from '../Confirmation';
+import { NonRecurring } from '../NonRecurring';
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
       <TopNav />
       <Status />
       <Confirmation />
+      <NonRecurring />
       <Switch>
         <Route exact path="/" component={Schedule} />
         <Route component={NotFoundPage} />
