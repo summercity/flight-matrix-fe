@@ -27,58 +27,54 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Dialog from '@material-ui/core/Dialog';
-import AddIcon from '@material-ui/icons/Add';
-import blue from '@material-ui/core/colors/blue';
+import ClearIcon from '@material-ui/icons/Clear';
+import Divider from '@material-ui/core/Divider';
 import messages from './messages';
 import saga from './saga';
 import reducer from './reducer';
 import { setOpenStatusAction } from './actions';
+import { setOpenStatusAction as setConfirmOpenAction } from '../Confirmation/actions';
 import makeSelectStatus from './selectors';
+import Styles from './style';
 
 const status = ['Cancelled', 'Pending', 'On-going', 'Completed'];
 
-const styles = {
-  avatar: {
-    backgroundColor: blue[100],
-    color: blue[600],
-  },
-};
-
-function statusIcon(s) {
+function statusIcon({ s, classes }) {
   switch (s) {
     case 'Cancelled':
-      return <CancelledIcon />;
+      return <CancelledIcon className={classes.iconCancelled} />;
     case 'Pending':
-      return <PendingIcon />;
+      return <PendingIcon className={classes.iconPending} />;
     case 'On-going':
-      return <OnSiteIcon />;
+      return <OnSiteIcon className={classes.iconOnSite} />;
     case 'Completed':
-      return <CompletedIcon />;
+      return <CompletedIcon className={classes.iconCompleted} />;
     default:
       return null;
   }
 }
 
 export class Status extends React.Component {
-  handleClose = () => {
-    console.log('close');
-  };
-
   handleListItemClick = value => {
     if (value === 'cancel') {
       this.props.setOpenStatus(false);
+    } else {
+      this.props.setOpenStatus(false);
+      // This can open in SAGA when API is ready
+      this.props.setConfirmOpen(true);
     }
   };
 
   render() {
-    const { open } = this.props.status;
+    const { open, selectedFlight } = this.props.status;
     const { classes } = this.props;
     return (
       <div>
-        <Dialog onClose={this.handleClose} open={open}>
+        <Dialog open={open}>
           <DialogTitle>
-            <FormattedMessage {...messages.flt} /> GK 080
+            <FormattedMessage {...messages.flt} /> {selectedFlight.flightNo}
           </DialogTitle>
+          <Divider />
           <div>
             <List>
               {status.map(s => (
@@ -88,18 +84,21 @@ export class Status extends React.Component {
                   key={s}
                 >
                   <ListItemAvatar>
-                    <Avatar className={classes.avatar}>{statusIcon(s)}</Avatar>
+                    <Avatar className={classes.avatar}>
+                      {statusIcon({ s, classes })}
+                    </Avatar>
                   </ListItemAvatar>
                   <ListItemText primary={s} />
                 </ListItem>
               ))}
+              <Divider />
               <ListItem
                 button
                 onClick={() => this.handleListItemClick('cancel')}
               >
                 <ListItemAvatar>
                   <Avatar>
-                    <AddIcon />
+                    <ClearIcon />
                   </Avatar>
                 </ListItemAvatar>
                 <ListItemText primary="Cancel" />
@@ -118,6 +117,7 @@ Status.propTypes = {
   onClose: PropTypes.func,
   selectedValue: PropTypes.string,
   setOpenStatus: PropTypes.func.isRequired,
+  setConfirmOpen: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -127,6 +127,7 @@ const mapStateToProps = createStructuredSelector({
 function mapDispatchToProps(dispatch) {
   return {
     setOpenStatus: open => dispatch(setOpenStatusAction(open)),
+    setConfirmOpen: open => dispatch(setConfirmOpenAction(open)),
     dispatch,
   };
 }
@@ -143,5 +144,5 @@ export default compose(
   withReducer,
   withSaga,
   withConnect,
-  withStyles(styles),
+  withStyles(Styles),
 )(Status);

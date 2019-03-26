@@ -17,12 +17,14 @@ import GlobalStyle from '../../global-styles';
 
 import TopNav from '../TopNav';
 import Status from '../Status';
+import Confirmation from '../Confirmation';
 
 export default function App() {
   return (
     <div>
       <TopNav />
       <Status />
+      <Confirmation />
       <Switch>
         <Route exact path="/" component={Schedule} />
         <Route component={NotFoundPage} />

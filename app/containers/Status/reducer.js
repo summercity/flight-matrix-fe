@@ -5,11 +5,15 @@
  */
 
 import { fromJS } from 'immutable';
-import { DEFAULT_ACTION, SET_OPEN_STATUS } from './constants';
+import {
+  DEFAULT_ACTION,
+  SET_OPEN_STATUS,
+  SET_SELECTED_FLIGHT,
+} from './constants';
 
 export const initialState = fromJS({
-  open: true,
-  selectedFlight: {},
+  open: false,
+  selectedFlight: [],
 });
 
 function statusReducer(state = initialState, action) {
@@ -18,6 +22,8 @@ function statusReducer(state = initialState, action) {
       return state;
     case SET_OPEN_STATUS:
       return state.set('open', action.open);
+    case SET_SELECTED_FLIGHT:
+      return state.set('selectedFlight', action.selectedFlight);
     default:
       return state;
   }
