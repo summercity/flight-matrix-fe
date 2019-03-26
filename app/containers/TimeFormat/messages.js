@@ -13,4 +13,12 @@ export default defineMessages({
     id: `${scope}.header`,
     defaultMessage: 'This is the TimeFormat container!',
   },
+  minutes: {
+    id: `${scope}.header`,
+    defaultMessage: 'EVERY 15 MINUTES',
+  },
+  hourly: {
+    id: `${scope}.header`,
+    defaultMessage: 'EVERY HOUR',
+  },
 });

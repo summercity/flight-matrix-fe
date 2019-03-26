@@ -7,7 +7,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import { FormattedMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 
@@ -28,9 +28,8 @@ import makeSelectSchedule from '../Schedule/selectors';
 
 import reducer from './reducer';
 import saga from './saga';
+import messages from './messages';
 import Styles from './style';
-
-// import messages from './messages';
 
 /* eslint-disable react/prefer-stateless-function */
 export class TimeFormat extends React.PureComponent {
@@ -55,7 +54,6 @@ export class TimeFormat extends React.PureComponent {
 
   render() {
     const { classes } = this.props;
-    console.log('a', classes);
     return (
       <div>
         <Tabs
@@ -65,8 +63,14 @@ export class TimeFormat extends React.PureComponent {
           textColor="primary"
           onChange={this.handleChange}
         >
-          <Tab className={classes.tab} label="EVERY 15 MINUTES" />
-          <Tab className={classes.tab} label="EVERY HOUR" />
+          <Tab
+            className={classes.tab}
+            label={<FormattedMessage {...messages.minutes} />}
+          />
+          <Tab
+            className={classes.tab}
+            label={<FormattedMessage {...messages.hourly} />}
+          />
         </Tabs>
       </div>
     );
