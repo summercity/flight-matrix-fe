@@ -26,6 +26,7 @@ import Menu from '@material-ui/core/Menu';
 
 import saga from './saga';
 import reducer from './reducer';
+import { setOpenStatusAction } from '../SideNav/actions';
 import makeSelectTopNav from './selectors';
 
 const styles = {
@@ -60,6 +61,10 @@ export class TopNav extends React.Component {
     this.setState({ anchorEl: null });
   };
 
+  handleOpenSideNav = () => {
+    this.props.setOpenStatus(true);
+  };
+
   render() {
     const { classes } = this.props;
     const { auth, anchorEl } = this.state;
@@ -86,6 +91,7 @@ export class TopNav extends React.Component {
                 className={classes.menuButton}
                 color="inherit"
                 aria-label="Menu"
+                onClick={this.handleOpenSideNav}
               >
                 <MenuIcon />
               </IconButton>
@@ -131,21 +137,23 @@ export class TopNav extends React.Component {
 TopNav.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
+  setOpenStatus: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = createStructuredSelector({
   topNav: makeSelectTopNav(),
 });
 
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     dispatch,
-//   };
-// }
+function mapDispatchToProps(dispatch) {
+  return {
+    setOpenStatus: open => dispatch(setOpenStatusAction(open)),
+    dispatch,
+  };
+}
 
 const withConnect = connect(
   mapStateToProps,
-  {},
+  mapDispatchToProps,
 );
 
 const withReducer = injectReducer({ key: 'topNav', reducer });

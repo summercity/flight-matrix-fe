@@ -19,6 +19,8 @@ import TopNav from '../TopNav';
 import Status from '../Status';
 import Confirmation from '../Confirmation';
 import { NonRecurring } from '../NonRecurring';
+import SideNav from '../SideNav';
+import Recurring from '../Recurring';
 
 export default function App() {
   return (
@@ -27,8 +29,10 @@ export default function App() {
       <Status />
       <Confirmation />
       <NonRecurring />
+      <SideNav />
       <Switch>
-        <Route exact path="/" component={Schedule} />
+        <Route exact path="/recurring/schedules" component={Recurring} />
+        <Route exact path="/schedule" component={Schedule} />
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />

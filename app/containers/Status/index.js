@@ -17,7 +17,7 @@ import injectReducer from 'utils/injectReducer';
 import PendingIcon from '@material-ui/icons/AirplanemodeActive';
 import CancelledIcon from '@material-ui/icons/AirplanemodeInactive';
 import OnSiteIcon from '@material-ui/icons/LocalGasStation';
-import CompletedIcon from '@material-ui/icons/CheckBox';
+import CompletedIcon from '@material-ui/icons/EventAvailable';
 
 import { withStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';

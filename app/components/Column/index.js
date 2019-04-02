@@ -8,7 +8,7 @@ import React from 'react';
 import PendingIcon from '@material-ui/icons/AirplanemodeActive';
 import CancelledIcon from '@material-ui/icons/AirplanemodeInactive';
 import OnSiteIcon from '@material-ui/icons/LocalGasStation';
-import CompletedIcon from '@material-ui/icons/CheckBox';
+import CompletedIcon from '@material-ui/icons/EventAvailable';
 
 function Column({
   type,
