@@ -63,12 +63,21 @@ export class SideNav extends React.Component {
     const sideList = (
       <div className={classes.list}>
         <List>
-          <Link to="/">
+          {/* <Link to="/">
             <ListItem button key={1}>
               <ListItemIcon>
                 <DashboardIcon />
               </ListItemIcon>
               <ListItemText primary="Dashboard" />
+            </ListItem>
+          </Link> */}
+
+          <Link to="/users">
+            <ListItem button key={1}>
+              <ListItemIcon>
+                <DashboardIcon />
+              </ListItemIcon>
+              <ListItemText primary="Users" />
             </ListItem>
           </Link>
 

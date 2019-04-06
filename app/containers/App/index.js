@@ -20,8 +20,12 @@ import Status from '../Status';
 import Confirmation from '../Confirmation';
 import { NonRecurring } from '../NonRecurring';
 import SideNav from '../SideNav';
+
 import Recurring from '../Recurring';
 import RecurringForm from '../Recurring/Form';
+
+import Users from '../Users';
+import UserForm from '../Users/Form';
 
 export default function App() {
   return (
@@ -33,10 +37,18 @@ export default function App() {
       <SideNav />
       <Switch>
         <Route exact path="/" component={Recurring} />
+        <Route exact path="/users" component={Users} />
+        <Route exact path="/users/form" component={UserForm} />
+        <Route exact path="/users/form/:id" component={UserForm} />
         <Route exact path="/recurring/schedules" component={Recurring} />
         <Route
           exact
           path="/recurring/schedules/form"
+          component={RecurringForm}
+        />
+        <Route
+          exact
+          path="/recurring/schedules/form/:id"
           component={RecurringForm}
         />
         <Route exact path="/schedule" component={Schedule} />

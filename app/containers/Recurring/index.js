@@ -176,6 +176,10 @@ export class Recurring extends React.Component {
     this.props.history.push('/recurring/schedules/form');
   };
 
+  handleClickEdit = () => {
+    this.props.history.push('/recurring/schedules/form/1');
+  };
+
   render() {
     const { classes } = this.props;
     return (
@@ -252,6 +256,7 @@ export class Recurring extends React.Component {
                   </CustomTableCell>
                   <CustomTableCell align="center">
                     <Button
+                      onClick={this.handleClickEdit}
                       variant="contained"
                       size="small"
                       className={classes.button}

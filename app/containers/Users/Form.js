@@ -20,11 +20,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import FormControl from '@material-ui/core/FormControl';
 import Input from '@material-ui/core/Input';
-import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Select from '@material-ui/core/Select';
-import TimeField from 'react-simple-timefield';
 import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
 import ReturnIcon from '@material-ui/icons/KeyboardReturn';
@@ -35,7 +31,7 @@ import reducer from './reducer';
 import makeSelectRecurring from './selectors';
 import Styles from './style';
 /* eslint-disable react/prefer-stateless-function */
-export class RecurringForm extends React.Component {
+export class UserForm extends React.Component {
   handleChange = event => {
     console.log(event);
   };
@@ -45,7 +41,7 @@ export class RecurringForm extends React.Component {
   }
 
   handleClickReturn = () => {
-    this.props.history.push('/recurring/schedules');
+    this.props.history.push('/users');
   };
 
   componentDidMount() {
@@ -54,11 +50,11 @@ export class RecurringForm extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { formData } = this.props.recurring;
+    const { formData } = this.props.users;
     return (
       <div>
         <Helmet>
-          <title>Recurring Form</title>
+          <title>User Form</title>
           <meta name="description" content="Description of Recurring" />
         </Helmet>
         <Paper className={classes.heading}>
@@ -68,80 +64,55 @@ export class RecurringForm extends React.Component {
           <div className={classes.container}>
             <FormControl className={classes.formControl}>
               <InputLabel className={classes.label} htmlFor="component-simple">
-                Flight Number
+                Last Name
               </InputLabel>
-              <Input id="component-simple" onChange={this.handleChange} />
-            </FormControl>
-
-            <FormControl className={classes.formControl}>
-              <InputLabel className={classes.label} htmlFor="component-simple">
-                Destination
-              </InputLabel>
-              <Input id="component-simple" onChange={this.handleChange} />
-            </FormControl>
-
-            <FormControl className={classes.formControl}>
-              <InputLabel className={classes.label} htmlFor="component-simple">
-                Equipment
-              </InputLabel>
-              <Input id="component-simple" onChange={this.handleChange} />
-            </FormControl>
-
-            <FormControl className={classes.formControl}>
-              <InputLabel className={classes.label}>Terminal</InputLabel>
-              <Select
-                value=""
+              <Input
+                id="component-simple"
                 onChange={this.handleChange}
-                inputProps={{
-                  name: 'age',
-                  id: 'age-simple',
-                }}
-              >
-                <MenuItem value={1}>1</MenuItem>
-                <MenuItem value={2}>2</MenuItem>
-                <MenuItem value={3}>3</MenuItem>
-                <MenuItem value={4}>4</MenuItem>
-              </Select>
-            </FormControl>
-
-            <FormControl className={classes.formControl}>
-              <InputLabel className={classes.label}>Ground Time</InputLabel>
-              <Select
-                value=""
-                onChange={this.handleChange}
-                inputProps={{
-                  name: 'age',
-                  id: 'age-simple',
-                }}
-              >
-                <MenuItem value={60}>60</MenuItem>
-                <MenuItem value={90}>90</MenuItem>
-                <MenuItem value={120}>120</MenuItem>
-              </Select>
-            </FormControl>
-
-            <FormControl className={classes.formControl}>
-              <InputLabel className={classes.label} htmlFor="component-simple">
-                Departure
-              </InputLabel>
-              <TimeField
-                input={<Input />}
-                value={formData.departure}
-                onChange={this.onTimeChange}
+                value={formData.lastName}
               />
             </FormControl>
 
             <FormControl className={classes.formControl}>
-              <TextField
-                id="dateTo"
-                label="Schedule Date"
-                type="date"
-                defaultValue=""
-                className={classes.textField}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
+              <InputLabel className={classes.label} htmlFor="component-simple">
+                First Name
+              </InputLabel>
+              <Input id="component-simple" onChange={this.handleChange} />
+            </FormControl>
+
+            <FormControl className={classes.formControl}>
+              <InputLabel className={classes.label} htmlFor="component-simple">
+                Department
+              </InputLabel>
+              <Input id="component-simple" onChange={this.handleChange} />
+            </FormControl>
+
+            <FormControl className={classes.formControl}>
+              <InputLabel className={classes.label} htmlFor="component-simple">
+                Email
+              </InputLabel>
+              <Input id="component-simple" onChange={this.handleChange} />
+            </FormControl>
+
+            <FormControl className={classes.formControl}>
+              <InputLabel className={classes.label} htmlFor="component-simple">
+                Username
+              </InputLabel>
+              <Input id="component-simple" onChange={this.handleChange} />
+            </FormControl>
+
+            <FormControl className={classes.formControl}>
+              <InputLabel className={classes.label} htmlFor="component-simple">
+                Password
+              </InputLabel>
+              <Input id="component-simple" onChange={this.handleChange} />
+            </FormControl>
+
+            <FormControl className={classes.formControl}>
+              <InputLabel className={classes.label} htmlFor="component-simple">
+                Confirm Password
+              </InputLabel>
+              <Input id="component-simple" onChange={this.handleChange} />
             </FormControl>
           </div>
           <div className={classes.ButtonControl}>
@@ -175,17 +146,17 @@ export class RecurringForm extends React.Component {
   }
 }
 
-RecurringForm.propTypes = {
+UserForm.propTypes = {
   // dispatch: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
   history: PropTypes.object,
-  recurring: PropTypes.object.isRequired,
+  users: PropTypes.object.isRequired,
   match: PropTypes.object,
   formData: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
-  recurring: makeSelectRecurring(),
+  users: makeSelectRecurring(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -207,4 +178,4 @@ export default compose(
   withSaga,
   withConnect,
   withStyles(Styles),
-)(RecurringForm);
+)(UserForm);

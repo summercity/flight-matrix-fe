@@ -6,7 +6,7 @@ export const Styles = theme => ({
     overflowX: 'auto',
   },
   heading: {
-    maxWidth: '1000px',
+    width: '1000px',
     margin: '0 auto',
     color: 'rgb(2, 62, 84)',
   },
