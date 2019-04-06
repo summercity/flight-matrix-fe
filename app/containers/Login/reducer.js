@@ -1,6 +1,6 @@
 /*
  *
- * Users reducer
+ * Login reducer
  *
  */
 
@@ -9,13 +9,12 @@ import { DEFAULT_ACTION } from './constants';
 
 export const initialState = fromJS({
   formData: {
-    id: '',
-    lastName: '',
-    firstName: '',
+    userName: null,
+    password: null,
   },
 });
 
-function usersReducer(state = initialState, action) {
+function loginReducer(state = initialState, action) {
   switch (action.type) {
     case DEFAULT_ACTION:
       return state;
@@ -24,4 +23,4 @@ function usersReducer(state = initialState, action) {
   }
 }
 
-export default usersReducer;
+export default loginReducer;

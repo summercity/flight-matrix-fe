@@ -77,42 +77,66 @@ export class UserForm extends React.Component {
               <InputLabel className={classes.label} htmlFor="component-simple">
                 First Name
               </InputLabel>
-              <Input id="component-simple" onChange={this.handleChange} />
+              <Input
+                id="component-simple"
+                onChange={this.handleChange}
+                value={formData.lastName}
+              />
             </FormControl>
 
             <FormControl className={classes.formControl}>
               <InputLabel className={classes.label} htmlFor="component-simple">
                 Department
               </InputLabel>
-              <Input id="component-simple" onChange={this.handleChange} />
+              <Input
+                id="component-simple"
+                onChange={this.handleChange}
+                value={formData.lastName}
+              />
             </FormControl>
 
             <FormControl className={classes.formControl}>
               <InputLabel className={classes.label} htmlFor="component-simple">
                 Email
               </InputLabel>
-              <Input id="component-simple" onChange={this.handleChange} />
+              <Input
+                id="component-simple"
+                onChange={this.handleChange}
+                value={formData.lastName}
+              />
             </FormControl>
 
             <FormControl className={classes.formControl}>
               <InputLabel className={classes.label} htmlFor="component-simple">
                 Username
               </InputLabel>
-              <Input id="component-simple" onChange={this.handleChange} />
+              <Input
+                id="component-simple"
+                onChange={this.handleChange}
+                value={formData.lastName}
+              />
             </FormControl>
 
             <FormControl className={classes.formControl}>
               <InputLabel className={classes.label} htmlFor="component-simple">
                 Password
               </InputLabel>
-              <Input id="component-simple" onChange={this.handleChange} />
+              <Input
+                id="component-simple"
+                onChange={this.handleChange}
+                value={formData.lastName}
+              />
             </FormControl>
 
             <FormControl className={classes.formControl}>
               <InputLabel className={classes.label} htmlFor="component-simple">
                 Confirm Password
               </InputLabel>
-              <Input id="component-simple" onChange={this.handleChange} />
+              <Input
+                id="component-simple"
+                onChange={this.handleChange}
+                value={formData.lastName}
+              />
             </FormControl>
           </div>
           <div className={classes.ButtonControl}>

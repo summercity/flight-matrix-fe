@@ -15,7 +15,6 @@ import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import GlobalStyle from '../../global-styles';
 
-import TopNav from '../TopNav';
 import Status from '../Status';
 import Confirmation from '../Confirmation';
 import { NonRecurring } from '../NonRecurring';
@@ -27,33 +26,38 @@ import RecurringForm from '../Recurring/Form';
 import Users from '../Users';
 import UserForm from '../Users/Form';
 
+import Login from '../Login';
+import Authenticated from '../Authenticated';
+
 export default function App() {
   return (
     <div>
-      <TopNav />
-      <Status />
-      <Confirmation />
-      <NonRecurring />
-      <SideNav />
-      <Switch>
-        <Route exact path="/" component={Recurring} />
-        <Route exact path="/users" component={Users} />
-        <Route exact path="/users/form" component={UserForm} />
-        <Route exact path="/users/form/:id" component={UserForm} />
-        <Route exact path="/recurring/schedules" component={Recurring} />
-        <Route
-          exact
-          path="/recurring/schedules/form"
-          component={RecurringForm}
-        />
-        <Route
-          exact
-          path="/recurring/schedules/form/:id"
-          component={RecurringForm}
-        />
-        <Route exact path="/schedule" component={Schedule} />
-        <Route component={NotFoundPage} />
-      </Switch>
+      <Authenticated>
+        <Status />
+        <Confirmation />
+        <NonRecurring />
+        <SideNav />
+        <Switch>
+          <Route exact path="/" component={Recurring} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/users" component={Users} />
+          <Route exact path="/users/form" component={UserForm} />
+          <Route exact path="/users/form/:id" component={UserForm} />
+          <Route exact path="/recurring/schedules" component={Recurring} />
+          <Route
+            exact
+            path="/recurring/schedules/form"
+            component={RecurringForm}
+          />
+          <Route
+            exact
+            path="/recurring/schedules/form/:id"
+            component={RecurringForm}
+          />
+          <Route exact path="/schedule" component={Schedule} />
+          <Route component={NotFoundPage} />
+        </Switch>
+      </Authenticated>
       <GlobalStyle />
     </div>
   );
