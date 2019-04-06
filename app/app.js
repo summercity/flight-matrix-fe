@@ -66,6 +66,15 @@ const theme = createMuiTheme({
         backgroundColor: '#023E54',
       },
     },
+    MuiButton: {
+      containedPrimary: {
+        backgroundColor: '#023E54',
+      },
+      outlinedPrimary: {
+        backgroundColor: '#fff',
+        color: '#023E54',
+      },
+    },
   },
 });
 

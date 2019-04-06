@@ -7,7 +7,19 @@
 import { fromJS } from 'immutable';
 import { DEFAULT_ACTION } from './constants';
 
-export const initialState = fromJS({});
+export const initialState = fromJS({
+  formData: {
+    id: null,
+    flightNo: null,
+    destination: null,
+    equipment: null,
+    terminal: null,
+    departure: '00:00',
+    groundTime: 0,
+    scheduleDate: null,
+    status: '@pending',
+  },
+});
 
 function recurringReducer(state = initialState, action) {
   switch (action.type) {

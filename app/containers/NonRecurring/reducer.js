@@ -17,7 +17,7 @@ export const initialState = fromJS({
     terminal: null,
     departure: '00:00',
     groundTime: 0,
-    flightDate: null,
+    scheduleDate: null,
     status: '@pending',
   },
 });
