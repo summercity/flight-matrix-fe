@@ -45,6 +45,37 @@ const theme = createMuiTheme({
   typography: {
     useNextVariants: true,
   },
+  overrides: {
+    MuiToggleButton: {
+      root: {
+        '&$selected': {
+          color: '#FFD600;',
+        },
+      },
+    },
+
+    MuiTab: {
+      textColorPrimary: {
+        '&$selected': {
+          color: '#023E54',
+        },
+      },
+    },
+    MuiPrivateTabIndicator: {
+      colorPrimary: {
+        backgroundColor: '#023E54',
+      },
+    },
+    MuiButton: {
+      containedPrimary: {
+        backgroundColor: '#023E54',
+      },
+      outlinedPrimary: {
+        backgroundColor: '#fff',
+        color: '#023E54',
+      },
+    },
+  },
 });
 
 // Create redux store with history
